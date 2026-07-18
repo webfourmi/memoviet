@@ -1,51 +1,45 @@
-name: Déployer MemoViet dans la branche principale
+name: Publier MemoViet
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'memoviet-package.zip'
-      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: memoviet-deployment
+  group: pages
   cancel-in-progress: true
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v4
 
-      - name: Vérifier le paquet
-        run: test -f memoviet-package.zip
-
-      - name: Décompresser MemoViet
+      - name: Préparer le site
         run: |
           rm -rf _site
           mkdir _site
-          unzip -q memoviet-package.zip -d _site
+          cp -a index.html manifest.webmanifest sw.js icons assets _site/
+          touch _site/.nojekyll
 
-          rm -rf assets icons payload
-          rm -f index.html manifest.webmanifest sw.js .nojekyll
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
 
-          cp -a _site/. .
-          touch .nojekyll
-          rm -rf _site
+      - name: Envoyer le site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
 
-      - name: Publier les fichiers dans main
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html manifest.webmanifest sw.js icons assets .nojekyll
-          if git diff --cached --quiet; then
-            echo "MemoViet est déjà à jour."
-          else
-            git commit -m "Déployer MemoViet"
-            git push
-          fi
+      - name: Publier
+        id: deployment
+        uses: actions/deploy-pages@v4
