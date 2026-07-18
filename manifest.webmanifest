@@ -1,20 +1,21 @@
 {
-  "name": "MemoViet · Vietnamien pratique",
+  "name": "MemoViet",
   "short_name": "MemoViet",
-  "description": "Apprendre le vietnamien pratique avec des cartes illustrées, des leçons et des dialogues.",
-  "lang": "fr",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#fffaf3",
+  "background_color": "#f7f1e8",
   "theme_color": "#8fb7a0",
+  "description": "Vietnamien pratique avec cartes, aventures et dialogues guidés ou libres.",
   "icons": [
     {
-      "src": "icons/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
