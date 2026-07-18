@@ -1,0 +1,47 @@
+name: Publier MemoViet
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'memoviet-package.zip'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Préparer le site
+        run: |
+          rm -rf _site
+          mkdir _site
+          unzip -q memoviet-package.zip -d _site
+          touch _site/.nojekyll
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Envoyer le site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publier
+        id: deployment
+        uses: actions/deploy-pages@v4
