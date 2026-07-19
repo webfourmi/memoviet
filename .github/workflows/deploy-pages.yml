@@ -29,22 +29,29 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp -a index.html manifest.webmanifest sw.js editor.js editor.css icons assets _site/
+          cp -a index.html manifest.webmanifest sw.js editor.js editor.css backup.js backup.css icons assets _site/
           python3 - <<'PY'
           from pathlib import Path
           p = Path('_site/index.html')
           text = p.read_text(encoding='utf-8')
           if 'editor.css' not in text:
-              text = text.replace('</head>', '<link rel="stylesheet" href="editor.css?v=1"></head>')
+              text = text.replace('</head>', '<link rel="stylesheet" href="editor.css?v=2"></head>')
+          if 'backup.css' not in text:
+              text = text.replace('</head>', '<link rel="stylesheet" href="backup.css?v=1"></head>')
           if 'editor.js' not in text:
-              text = text.replace('</body>', '<script src="editor.js?v=1"></script></body>')
+              text = text.replace('</body>', '<script src="editor.js?v=2"></script></body>')
+          if 'backup.js' not in text:
+              text = text.replace('</body>', '<script src="backup.js?v=1"></script></body>')
           p.write_text(text, encoding='utf-8')
 
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
-          sw_text = sw_text.replace("memoviet-context-scenes-v7", "memoviet-editor-v8")
+          sw_text = sw_text.replace('memoviet-editor-v8', 'memoviet-backup-v9')
+          sw_text = sw_text.replace('memoviet-context-scenes-v7', 'memoviet-backup-v9')
           if 'editor.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest","./editor.js","./editor.css"')
+          if 'backup.js' not in sw_text:
+              sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest","./backup.js","./backup.css"')
           sw.write_text(sw_text, encoding='utf-8')
           PY
           touch _site/.nojekyll
