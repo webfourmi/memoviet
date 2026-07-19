@@ -29,7 +29,7 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp -a index.html manifest.webmanifest sw.js editor.js editor.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css icons assets _site/
+          cp -a index.html manifest.webmanifest sw.js editor.js editor.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css icons assets _site/
           python3 - <<'PY'
           from pathlib import Path
           p = Path('_site/index.html')
@@ -38,7 +38,8 @@ jobs:
               ('editor.css', '<link rel="stylesheet" href="editor.css?v=2">'),
               ('backup.css', '<link rel="stylesheet" href="backup.css?v=1">'),
               ('ux.css', '<link rel="stylesheet" href="ux.css?v=2">'),
-              ('lesson-fixes.css', '<link rel="stylesheet" href="lesson-fixes.css?v=1">')
+              ('lesson-fixes.css', '<link rel="stylesheet" href="lesson-fixes.css?v=1">'),
+              ('adventure-flow.css', '<link rel="stylesheet" href="adventure-flow.css?v=1">')
           ]
           for marker, tag in links:
               if marker not in text:
@@ -47,7 +48,8 @@ jobs:
               ('editor.js', '<script src="editor.js?v=2"></script>'),
               ('backup.js', '<script src="backup.js?v=1"></script>'),
               ('ux.js', '<script src="ux.js?v=2"></script>'),
-              ('lesson-fixes.js', '<script src="lesson-fixes.js?v=1"></script>')
+              ('lesson-fixes.js', '<script src="lesson-fixes.js?v=1"></script>'),
+              ('adventure-flow.js', '<script src="adventure-flow.js?v=1"></script>')
           ]
           for marker, tag in scripts:
               if marker not in text:
@@ -56,10 +58,10 @@ jobs:
 
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
-          for old in ['memoviet-compact-v11','memoviet-compact-v10','memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7']:
-              sw_text = sw_text.replace(old, 'memoviet-dialogue-home-v12')
-          additions = '"./editor.js","./editor.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css"'
-          if 'lesson-fixes.js' not in sw_text:
+          for old in ['memoviet-dialogue-home-v12','memoviet-compact-v11','memoviet-compact-v10','memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7']:
+              sw_text = sw_text.replace(old, 'memoviet-adventure-flow-v13')
+          additions = '"./editor.js","./editor.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css"'
+          if 'adventure-flow.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
           sw.write_text(sw_text, encoding='utf-8')
           PY
