@@ -34,24 +34,28 @@ jobs:
           from pathlib import Path
           p = Path('_site/index.html')
           text = p.read_text(encoding='utf-8')
-          if 'editor.css' not in text:
-              text = text.replace('</head>', '<link rel="stylesheet" href="editor.css?v=2"></head>')
-          if 'backup.css' not in text:
-              text = text.replace('</head>', '<link rel="stylesheet" href="backup.css?v=1"></head>')
-          if 'ux.css' not in text:
-              text = text.replace('</head>', '<link rel="stylesheet" href="ux.css?v=1"></head>')
-          if 'editor.js' not in text:
-              text = text.replace('</body>', '<script src="editor.js?v=2"></script></body>')
-          if 'backup.js' not in text:
-              text = text.replace('</body>', '<script src="backup.js?v=1"></script></body>')
-          if 'ux.js' not in text:
-              text = text.replace('</body>', '<script src="ux.js?v=1"></script></body>')
+          links = [
+              ('editor.css', '<link rel="stylesheet" href="editor.css?v=2">'),
+              ('backup.css', '<link rel="stylesheet" href="backup.css?v=1">'),
+              ('ux.css', '<link rel="stylesheet" href="ux.css?v=2">')
+          ]
+          for marker, tag in links:
+              if marker not in text:
+                  text = text.replace('</head>', tag + '</head>')
+          scripts = [
+              ('editor.js', '<script src="editor.js?v=2"></script>'),
+              ('backup.js', '<script src="backup.js?v=1"></script>'),
+              ('ux.js', '<script src="ux.js?v=2"></script>')
+          ]
+          for marker, tag in scripts:
+              if marker not in text:
+                  text = text.replace('</body>', tag + '</body>')
           p.write_text(text, encoding='utf-8')
 
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
-          for old in ['memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7']:
-              sw_text = sw_text.replace(old, 'memoviet-compact-v10')
+          for old in ['memoviet-compact-v10','memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7']:
+              sw_text = sw_text.replace(old, 'memoviet-compact-v11')
           additions = '"./editor.js","./editor.css","./backup.js","./backup.css","./ux.js","./ux.css"'
           if 'ux.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
