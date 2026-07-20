@@ -3,40 +3,4 @@
   body{display:block!important;padding:0 0 calc(82px + env(safe-area-inset-bottom))!important;background:#f6f1e7!important}
   body>main,main,.app,.app-shell,.container,.site-shell{box-sizing:border-box!important;width:100%!important;max-width:none!important;margin:0!important;padding-inline:8px!important}
 
-  .mv-ux-toolbar{display:none!important}
-  .mv-mobile-original-hero{display:none!important}
-  .mv-ux-top{display:none!important}
-
-  .mv-mobile-brand{display:flex;align-items:center;box-sizing:border-box;width:100%;min-height:42px;padding:11px 14px 3px;background:#f6f1e7;color:#29483b}
-  .mv-mobile-brand strong{font-size:.98rem;font-weight:900;letter-spacing:.01em}
-
-  .mv-shared-adventure{position:relative!important;top:auto!important;z-index:20!important;box-sizing:border-box;width:calc(100% - 16px)!important;margin:4px 8px 10px!important;border-radius:15px!important}
-  #mvSharedAdventureButton{min-height:60px!important;padding:8px 12px!important}
-
-  #mvHomeHub{display:block!important;box-sizing:border-box!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
-  #mvHomeHub>.mv-page-head,#mvHomeHub>.mv-action-grid{display:none!important}
-
-  #mvJourneyPanel{display:grid!important;box-sizing:border-box;width:100%!important;max-width:none!important;margin:0!important;padding:10px 8px 14px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
-  #mvJourneyPanel.mv-ux-hidden{display:grid!important}
-  #mvJourneyPanel .mv-journey-head{margin:0 2px 8px!important}
-  #mvJourneyPanel .mv-journey-head .eyebrow{display:none!important}
-  #mvJourneyPanel .mv-journey-head h2{margin:0!important;font-size:1.16rem!important}
-  #mvJourneyPanel .mv-journey-summary{min-width:78px!important}
-  #mvJourneyPanel .mv-journey-summary strong{font-size:1.05rem!important}
-  #mvJourneyPanel .mv-journey-summary span{font-size:.66rem!important}
-  #mvJourneyPanel .mv-journey-tabs{margin-bottom:9px!important}
-  #mvJourneyPanel .mv-journey-tabs button{min-height:39px!important;font-size:.83rem!important}
-  #mvJourneyPanel .mv-vietnam-map{min-height:500px!important;border-radius:18px!important}
-  #mvJourneyPanel .mv-map-layout{grid-template-columns:1fr!important;gap:10px!important}
-  #mvJourneyPanel .mv-map-legend{padding:11px!important}
-  #mvJourneyPanel .mv-map-legend>p{display:none!important}
-  #mvJourneyPanel .mv-progress-table{min-width:560px!important}
-
-  #mvSpeakHub{margin-top:8px!important}
-  #mvSpeakHub .mv-speak-select{display:none!important}
-
-  .mv-ux-nav{grid-template-columns:repeat(4,minmax(0,1fr))!important;width:calc(100% - 14px)!important;max-width:none!important;bottom:calc(6px + env(safe-area-inset-bottom))!important;padding:6px!important;border-radius:20px!important}
-  .mv-ux-nav button{min-height:55px!important}
-  .mv-ux-nav button>span{font-size:19px!important}
-  .mv-ux-nav button>small{font-size:9px!important}
-}
+  .mv-ux-toolbar,.
