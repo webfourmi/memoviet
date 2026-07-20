@@ -29,13 +29,14 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp -a index.html manifest.webmanifest sw.js editor.js editor.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js dialogue-av02.js mobile-shell.js mobile-shell.css icons assets _site/
+          cp -a index.html manifest.webmanifest sw.js editor.js editor.css editor-mobile.js editor-mobile.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js dialogue-av02.js mobile-shell.js mobile-shell.css icons assets _site/
           python3 - <<'PY'
           from pathlib import Path
           p = Path('_site/index.html')
           text = p.read_text(encoding='utf-8')
           links = [
               ('editor.css', '<link rel="stylesheet" href="editor.css?v=2">'),
+              ('editor-mobile.css', '<link rel="stylesheet" href="editor-mobile.css?v=1">'),
               ('backup.css', '<link rel="stylesheet" href="backup.css?v=1">'),
               ('ux.css', '<link rel="stylesheet" href="ux.css?v=2">'),
               ('lesson-fixes.css', '<link rel="stylesheet" href="lesson-fixes.css?v=1">'),
@@ -49,6 +50,7 @@ jobs:
                   text = text.replace('</head>', tag + '</head>')
           scripts = [
               ('editor.js', '<script src="editor.js?v=2"></script>'),
+              ('editor-mobile.js', '<script src="editor-mobile.js?v=1"></script>'),
               ('backup.js', '<script src="backup.js?v=1"></script>'),
               ('ux.js', '<script src="ux.js?v=2"></script>'),
               ('lesson-fixes.js', '<script src="lesson-fixes.js?v=1"></script>'),
@@ -67,15 +69,16 @@ jobs:
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
           old_names = [
-              'memoviet-mobile-shell-v19','memoviet-progress-visible-v18','memoviet-dialogue-av02-v17',
-              'memoviet-progress-map-v16','memoviet-ui-cleanup-v15','memoviet-review-scope-v14',
-              'memoviet-adventure-flow-v13','memoviet-dialogue-home-v12','memoviet-compact-v11',
-              'memoviet-compact-v10','memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7'
+              'memoviet-mobile-nav-v20','memoviet-mobile-shell-v19','memoviet-progress-visible-v18',
+              'memoviet-dialogue-av02-v17','memoviet-progress-map-v16','memoviet-ui-cleanup-v15',
+              'memoviet-review-scope-v14','memoviet-adventure-flow-v13','memoviet-dialogue-home-v12',
+              'memoviet-compact-v11','memoviet-compact-v10','memoviet-backup-v9',
+              'memoviet-editor-v8','memoviet-context-scenes-v7'
           ]
           for old in old_names:
-              sw_text = sw_text.replace(old, 'memoviet-mobile-nav-v20')
-          additions = '"./editor.js","./editor.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./dialogue-av02.js","./mobile-shell.js","./mobile-shell.css"'
-          if 'mobile-shell.js' not in sw_text:
+              sw_text = sw_text.replace(old, 'memoviet-editor-mobile-v21')
+          additions = '"./editor.js","./editor.css","./editor-mobile.js","./editor-mobile.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./dialogue-av02.js","./mobile-shell.js","./mobile-shell.css"'
+          if 'editor-mobile.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
           sw.write_text(sw_text, encoding='utf-8')
           PY
