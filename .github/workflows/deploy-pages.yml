@@ -42,7 +42,7 @@ jobs:
               ('adventure-flow.css', '<link rel="stylesheet" href="adventure-flow.css?v=2">'),
               ('review-scope.css', '<link rel="stylesheet" href="review-scope.css?v=1">'),
               ('progress-map.css', '<link rel="stylesheet" href="progress-map.css?v=2">'),
-              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=1">')
+              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=2">')
           ]
           for marker, tag in links:
               if marker not in text:
@@ -57,7 +57,7 @@ jobs:
               ('progress-map.js', '<script src="progress-map.js?v=2"></script>'),
               ('progress-map-visible.js', '<script src="progress-map-visible.js?v=1"></script>'),
               ('dialogue-av02.js', '<script src="dialogue-av02.js?v=1"></script>'),
-              ('mobile-shell.js', '<script src="mobile-shell.js?v=1"></script>')
+              ('mobile-shell.js', '<script src="mobile-shell.js?v=2"></script>')
           ]
           for marker, tag in scripts:
               if marker not in text:
@@ -67,13 +67,13 @@ jobs:
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
           old_names = [
-              'memoviet-progress-visible-v18','memoviet-dialogue-av02-v17','memoviet-progress-map-v16',
-              'memoviet-ui-cleanup-v15','memoviet-review-scope-v14','memoviet-adventure-flow-v13',
-              'memoviet-dialogue-home-v12','memoviet-compact-v11','memoviet-compact-v10',
-              'memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7'
+              'memoviet-mobile-shell-v19','memoviet-progress-visible-v18','memoviet-dialogue-av02-v17',
+              'memoviet-progress-map-v16','memoviet-ui-cleanup-v15','memoviet-review-scope-v14',
+              'memoviet-adventure-flow-v13','memoviet-dialogue-home-v12','memoviet-compact-v11',
+              'memoviet-compact-v10','memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7'
           ]
           for old in old_names:
-              sw_text = sw_text.replace(old, 'memoviet-mobile-shell-v19')
+              sw_text = sw_text.replace(old, 'memoviet-mobile-nav-v20')
           additions = '"./editor.js","./editor.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./dialogue-av02.js","./mobile-shell.js","./mobile-shell.css"'
           if 'mobile-shell.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
