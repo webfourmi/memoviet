@@ -29,7 +29,7 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp -a index.html manifest.webmanifest sw.js editor.js editor.css editor-mobile.js editor-mobile.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js dialogue-av02.js mobile-shell.js mobile-shell.css icons assets _site/
+          cp -a index.html manifest.webmanifest sw.js dialogue-av02.js editor.js editor.css editor-mobile.js editor-mobile.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js mobile-shell.js mobile-shell.css mobile-cleanup.js mobile-cleanup.css icons assets _site/
           python3 - <<'PY'
           from pathlib import Path
           p = Path('_site/index.html')
@@ -43,12 +43,14 @@ jobs:
               ('adventure-flow.css', '<link rel="stylesheet" href="adventure-flow.css?v=2">'),
               ('review-scope.css', '<link rel="stylesheet" href="review-scope.css?v=1">'),
               ('progress-map.css', '<link rel="stylesheet" href="progress-map.css?v=2">'),
-              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=2">')
+              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=2">'),
+              ('mobile-cleanup.css', '<link rel="stylesheet" href="mobile-cleanup.css?v=1">')
           ]
           for marker, tag in links:
               if marker not in text:
                   text = text.replace('</head>', tag + '</head>')
           scripts = [
+              ('dialogue-av02.js', '<script src="dialogue-av02.js?v=2"></script>'),
               ('editor.js', '<script src="editor.js?v=2"></script>'),
               ('editor-mobile.js', '<script src="editor-mobile.js?v=1"></script>'),
               ('backup.js', '<script src="backup.js?v=1"></script>'),
@@ -58,8 +60,8 @@ jobs:
               ('review-scope.js', '<script src="review-scope.js?v=1"></script>'),
               ('progress-map.js', '<script src="progress-map.js?v=2"></script>'),
               ('progress-map-visible.js', '<script src="progress-map-visible.js?v=1"></script>'),
-              ('dialogue-av02.js', '<script src="dialogue-av02.js?v=1"></script>'),
-              ('mobile-shell.js', '<script src="mobile-shell.js?v=2"></script>')
+              ('mobile-shell.js', '<script src="mobile-shell.js?v=2"></script>'),
+              ('mobile-cleanup.js', '<script src="mobile-cleanup.js?v=1"></script>')
           ]
           for marker, tag in scripts:
               if marker not in text:
@@ -69,16 +71,16 @@ jobs:
           sw = Path('_site/sw.js')
           sw_text = sw.read_text(encoding='utf-8')
           old_names = [
-              'memoviet-mobile-nav-v20','memoviet-mobile-shell-v19','memoviet-progress-visible-v18',
-              'memoviet-dialogue-av02-v17','memoviet-progress-map-v16','memoviet-ui-cleanup-v15',
-              'memoviet-review-scope-v14','memoviet-adventure-flow-v13','memoviet-dialogue-home-v12',
-              'memoviet-compact-v11','memoviet-compact-v10','memoviet-backup-v9',
-              'memoviet-editor-v8','memoviet-context-scenes-v7'
+              'memoviet-editor-mobile-v21','memoviet-mobile-nav-v20','memoviet-mobile-shell-v19',
+              'memoviet-progress-visible-v18','memoviet-dialogue-av02-v17','memoviet-progress-map-v16',
+              'memoviet-ui-cleanup-v15','memoviet-review-scope-v14','memoviet-adventure-flow-v13',
+              'memoviet-dialogue-home-v12','memoviet-compact-v11','memoviet-compact-v10',
+              'memoviet-backup-v9','memoviet-editor-v8','memoviet-context-scenes-v7'
           ]
           for old in old_names:
-              sw_text = sw_text.replace(old, 'memoviet-editor-mobile-v21')
-          additions = '"./editor.js","./editor.css","./editor-mobile.js","./editor-mobile.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./dialogue-av02.js","./mobile-shell.js","./mobile-shell.css"'
-          if 'editor-mobile.js' not in sw_text:
+              sw_text = sw_text.replace(old, 'memoviet-mobile-cleanup-v22')
+          additions = '"./dialogue-av02.js","./editor.js","./editor.css","./editor-mobile.js","./editor-mobile.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./mobile-shell.js","./mobile-shell.css","./mobile-cleanup.js","./mobile-cleanup.css"'
+          if 'mobile-cleanup.js' not in sw_text:
               sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
           sw.write_text(sw_text, encoding='utf-8')
           PY
