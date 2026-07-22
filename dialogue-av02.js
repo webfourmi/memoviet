@@ -1,11 +1,11 @@
 (() => {
   'use strict';
 
+  const REMOVED_IDS = new Set(['av02-05', 'av02-06']);
+
   const order = [
     'av02-01',
     'av02-02',
-    'av02-05',
-    'av02-06',
     'av02-03',
     'av02-04',
     'av02-07',
@@ -16,13 +16,13 @@
   const scenes = [
     {
       title: 'Je choisis mon plat',
-      context: 'Tu consultes le menu, demandes ce qu’est un plat puis choisis du poisson.',
-      count: 3
+      context: 'Tu consultes le menu et demandes ce qu’est un plat.',
+      count: 2
     },
     {
       title: 'Je précise la préparation',
-      context: 'Tu vérifies qu’il n’y a pas de porc, précises le niveau de piment et demandes davantage de légumes.',
-      count: 4
+      context: 'Tu précises le niveau de piment et demandes davantage de légumes.',
+      count: 3
     },
     {
       title: 'Je termine le repas',
@@ -39,14 +39,6 @@
     'av02-02': {
       vi: 'Đây là cá kho tộ, ăn với cơm và rau ạ.',
       fr: 'C’est du poisson mijoté en marmite, servi avec du riz et des légumes.'
-    },
-    'av02-05': {
-      vi: 'Dạ, vậy chị dùng món cá kho nhé?',
-      fr: 'Très bien, vous prenez donc le poisson mijoté ?'
-    },
-    'av02-06': {
-      vi: 'Dạ, món cá này không có thịt heo ạ.',
-      fr: 'Oui, ce plat de poisson ne contient pas de porc.'
     },
     'av02-03': {
       vi: 'Dạ, chị muốn không cay hoàn toàn phải không ạ?',
@@ -70,6 +62,30 @@
     }
   };
 
+  function cleanSavedEditorVersion() {
+    try {
+      const key = 'memoviet_lesson_editor_v1';
+      const store = JSON.parse(localStorage.getItem(key) || '{}');
+      const lesson = store?.lessons?.av02;
+      if (!lesson) return;
+
+      lesson.order = Array.isArray(lesson.order)
+        ? lesson.order.filter(id => !REMOVED_IDS.has(id))
+        : [...order];
+
+      if (lesson.phrases && typeof lesson.phrases === 'object') {
+        REMOVED_IDS.forEach(id => delete lesson.phrases[id]);
+      }
+
+      lesson.scenes = scenes.map(scene => ({...scene}));
+      localStorage.setItem(key, JSON.stringify(store));
+    } catch (error) {
+      console.warn('MemoViet : l’ancienne version enregistrée de l’aventure 2 n’a pas pu être nettoyée.', error);
+    }
+  }
+
+  cleanSavedEditorVersion();
+
   try {
     if (typeof DIALOGUE_ORDER_OVERRIDES !== 'undefined') {
       DIALOGUE_ORDER_OVERRIDES.av02 = [...order];
@@ -79,6 +95,7 @@
     }
     if (typeof DIALOGUE_REPLY_OVERRIDES !== 'undefined') {
       Object.assign(DIALOGUE_REPLY_OVERRIDES, replies);
+      REMOVED_IDS.forEach(id => delete DIALOGUE_REPLY_OVERRIDES[id]);
     }
   } catch (error) {
     console.warn('MemoViet : le dialogue de l’aventure 2 n’a pas pu être actualisé.', error);
