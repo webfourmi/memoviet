@@ -1,0 +1,8 @@
+@media (max-width:760px){
+  #mvMobileBrand{display:none!important}
+  .app-header{display:none!important}
+  .mv-shared-caption{display:none!important}
+  #mvSharedAdventurePicker>label{display:none!important}
+  #mvSharedAdventureBar{margin-top:6px!important}
+  #mvSharedAdventureButton{padding-top:8px!important}
+}
