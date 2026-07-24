@@ -1,3 +1,10 @@
 #mvJourneyPanel .mv-journey-tabs{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important;width:100%!important;overflow:visible!important}
 #mvJourneyPanel .mv-journey-tabs [data-journey-tab]{display:flex!important;visibility:visible!important;opacity:1!important;position:static!important;float:none!important;transform:none!important;width:100%!important;min-width:0!important;max-width:none!important;align-items:center!important;justify-content:center!important;white-space:normal!important}
-#mvJourneyPanel .mv-journey-tabs [data-journey-tab][hidden
+#mvJourneyPanel .mv-journey-tabs [data-journey-tab][hidden]{display:flex!important}
+#mvJourneyPanel #mvJourneyMap[hidden],#mvJourneyPanel #mvJourneyProgress[hidden]{display:none!important}
+#mvJourneyPanel .mv-vietnam-map{position:relative!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:3/4!important;overflow:hidden!important;background:#f7f2e7!important}
+#mvJourneyPanel .mv-rescue-map-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;display:block!important;z-index:1!important}
+#mvJourneyPanel .mv-vietnam-map>svg,#mvJourneyPanel .mv-watercolor-map-image{display:none!important}
+#mvJourneyPanel .mv-map-pins{position:absolute!important;inset:0!important;z-index:3!important}
+#mvJourneyPanel .mv-map-pin{z-index:4!important}
+@media(max-width:760px){#mvJourneyPanel{overflow:visible!important}#mvJourneyPanel .mv-map-layout{display:block!important}#mvJourneyPanel .mv-map-legend{margin-top:10px!important}#mvJourneyPanel .mv-journey-tabs{position:sticky!important;top:0!important;z-index:20!important;background:#edf3ed!important;padding:5px!important;border-radius:15px!important}}
