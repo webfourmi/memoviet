@@ -35,57 +35,40 @@ jobs:
           p = Path('_site/index.html')
           text = p.read_text(encoding='utf-8')
           links = [
-              ('editor.css', '<link rel="stylesheet" href="editor.css?v=2">'),
-              ('editor-mobile.css', '<link rel="stylesheet" href="editor-mobile.css?v=1">'),
-              ('backup.css', '<link rel="stylesheet" href="backup.css?v=1">'),
-              ('ux.css', '<link rel="stylesheet" href="ux.css?v=2">'),
-              ('lesson-fixes.css', '<link rel="stylesheet" href="lesson-fixes.css?v=1">'),
-              ('adventure-flow.css', '<link rel="stylesheet" href="adventure-flow.css?v=2">'),
-              ('review-scope.css', '<link rel="stylesheet" href="review-scope.css?v=1">'),
-              ('progress-map.css', '<link rel="stylesheet" href="progress-map.css?v=2">'),
-              ('progress-map-watercolor.css', '<link rel="stylesheet" href="progress-map-watercolor.css?v=2">'),
-              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=2">'),
-              ('mobile-cleanup.css', '<link rel="stylesheet" href="mobile-cleanup.css?v=1">')
+              ('editor.css', '<link rel="stylesheet" href="editor.css?v=31">'),
+              ('editor-mobile.css', '<link rel="stylesheet" href="editor-mobile.css?v=31">'),
+              ('backup.css', '<link rel="stylesheet" href="backup.css?v=31">'),
+              ('ux.css', '<link rel="stylesheet" href="ux.css?v=31">'),
+              ('lesson-fixes.css', '<link rel="stylesheet" href="lesson-fixes.css?v=31">'),
+              ('adventure-flow.css', '<link rel="stylesheet" href="adventure-flow.css?v=31">'),
+              ('review-scope.css', '<link rel="stylesheet" href="review-scope.css?v=31">'),
+              ('progress-map.css', '<link rel="stylesheet" href="progress-map.css?v=31">'),
+              ('progress-map-watercolor.css', '<link rel="stylesheet" href="progress-map-watercolor.css?v=31">'),
+              ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=31">'),
+              ('mobile-cleanup.css', '<link rel="stylesheet" href="mobile-cleanup.css?v=31">')
           ]
           for marker, tag in links:
               if marker not in text:
                   text = text.replace('</head>', tag + '</head>')
           scripts = [
-              ('dialogue-av02.js', '<script src="dialogue-av02.js?v=2"></script>'),
-              ('editor.js', '<script src="editor.js?v=2"></script>'),
-              ('editor-mobile.js', '<script src="editor-mobile.js?v=1"></script>'),
-              ('backup.js', '<script src="backup.js?v=1"></script>'),
-              ('ux.js', '<script src="ux.js?v=2"></script>'),
-              ('lesson-fixes.js', '<script src="lesson-fixes.js?v=1"></script>'),
-              ('adventure-flow.js', '<script src="adventure-flow.js?v=1"></script>'),
-              ('review-scope.js', '<script src="review-scope.js?v=1"></script>'),
-              ('progress-map.js', '<script src="progress-map.js?v=2"></script>'),
-              ('progress-map-visible.js', '<script src="progress-map-visible.js?v=1"></script>'),
-              ('progress-map-watercolor.js', '<script src="progress-map-watercolor.js?v=2"></script>'),
-              ('mobile-shell.js', '<script src="mobile-shell.js?v=2"></script>'),
-              ('mobile-cleanup.js', '<script src="mobile-cleanup.js?v=1"></script>')
+              ('dialogue-av02.js', '<script src="dialogue-av02.js?v=31"></script>'),
+              ('editor.js', '<script src="editor.js?v=31"></script>'),
+              ('editor-mobile.js', '<script src="editor-mobile.js?v=31"></script>'),
+              ('backup.js', '<script src="backup.js?v=31"></script>'),
+              ('ux.js', '<script src="ux.js?v=31"></script>'),
+              ('lesson-fixes.js', '<script src="lesson-fixes.js?v=31"></script>'),
+              ('adventure-flow.js', '<script src="adventure-flow.js?v=31"></script>'),
+              ('review-scope.js', '<script src="review-scope.js?v=31"></script>'),
+              ('progress-map.js', '<script src="progress-map.js?v=31"></script>'),
+              ('progress-map-visible.js', '<script src="progress-map-visible.js?v=31"></script>'),
+              ('progress-map-watercolor.js', '<script src="progress-map-watercolor.js?v=31"></script>'),
+              ('mobile-shell.js', '<script src="mobile-shell.js?v=31"></script>'),
+              ('mobile-cleanup.js', '<script src="mobile-cleanup.js?v=31"></script>')
           ]
           for marker, tag in scripts:
               if marker not in text:
                   text = text.replace('</body>', tag + '</body>')
           p.write_text(text, encoding='utf-8')
-
-          sw = Path('_site/sw.js')
-          sw_text = sw.read_text(encoding='utf-8')
-          old_names = [
-              'memoviet-watercolor-map-v23','memoviet-mobile-cleanup-v22','memoviet-editor-mobile-v21',
-              'memoviet-mobile-nav-v20','memoviet-mobile-shell-v19','memoviet-progress-visible-v18',
-              'memoviet-dialogue-av02-v17','memoviet-progress-map-v16','memoviet-ui-cleanup-v15',
-              'memoviet-review-scope-v14','memoviet-adventure-flow-v13','memoviet-dialogue-home-v12',
-              'memoviet-compact-v11','memoviet-compact-v10','memoviet-backup-v9',
-              'memoviet-editor-v8','memoviet-context-scenes-v7'
-          ]
-          for old in old_names:
-              sw_text = sw_text.replace(old, 'memoviet-watercolor-map-fix-v24')
-          additions = '"./dialogue-av02.js","./editor.js","./editor.css","./editor-mobile.js","./editor-mobile.css","./backup.js","./backup.css","./ux.js","./ux.css","./lesson-fixes.js","./lesson-fixes.css","./adventure-flow.js","./adventure-flow.css","./review-scope.js","./review-scope.css","./progress-map.js","./progress-map.css","./progress-map-visible.js","./progress-map-watercolor.js","./progress-map-watercolor.css","./mobile-shell.js","./mobile-shell.css","./mobile-cleanup.js","./mobile-cleanup.css","./assets/vietnam-map-watercolor.svg"'
-          if 'progress-map-watercolor.js' not in sw_text:
-              sw_text = sw_text.replace('"./manifest.webmanifest"', '"./manifest.webmanifest",' + additions)
-          sw.write_text(sw_text, encoding='utf-8')
           PY
           touch _site/.nojekyll
 
