@@ -1,5 +1,55 @@
-const CACHE='memoviet-context-scenes-v7';
-const ASSETS=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png","./assets/visuals/visual-001.webp","./assets/visuals/visual-002.webp","./assets/visuals/visual-003.webp","./assets/visuals/visual-004.webp","./assets/visuals/visual-005.webp","./assets/visuals/visual-006.webp","./assets/visuals/visual-007.webp","./assets/visuals/visual-008.webp","./assets/visuals/visual-009.webp","./assets/visuals/visual-010.webp","./assets/visuals/visual-011.webp","./assets/visuals/visual-012.webp","./assets/visuals/visual-013.webp","./assets/visuals/visual-014.webp","./assets/visuals/visual-015.webp","./assets/visuals/visual-016.webp","./assets/visuals/visual-017.webp","./assets/visuals/visual-018.webp","./assets/visuals/visual-019.webp","./assets/visuals/visual-020.webp","./assets/visuals/visual-021.webp","./assets/visuals/visual-022.webp","./assets/visuals/visual-023.webp","./assets/visuals/visual-024.webp","./assets/visuals/visual-025.webp","./assets/visuals/visual-026.webp","./assets/visuals/visual-027.webp","./assets/visuals/visual-028.webp","./assets/visuals/visual-029.webp","./assets/visuals/visual-030.webp","./assets/visuals/visual-031.webp","./assets/visuals/visual-032.webp","./assets/visuals/visual-033.webp","./assets/visuals/visual-034.webp","./assets/visuals/visual-035.webp","./assets/visuals/visual-036.webp","./assets/visuals/visual-037.webp","./assets/visuals/visual-038.webp","./assets/visuals/visual-039.webp","./assets/visuals/visual-040.webp","./assets/visuals/visual-041.webp","./assets/visuals/visual-042.webp","./assets/visuals/visual-043.webp","./assets/visuals/visual-044.webp","./assets/visuals/visual-045.webp","./assets/visuals/visual-046.webp","./assets/visuals/visual-047.webp","./assets/visuals/visual-048.webp","./assets/visuals/visual-049.webp","./assets/visuals/visual-050.webp","./assets/visuals/visual-051.webp","./assets/visuals/visual-052.webp","./assets/visuals/visual-053.webp","./assets/visuals/visual-054.webp","./assets/visuals/visual-055.webp","./assets/visuals/visual-056.webp","./assets/visuals/visual-057.webp","./assets/visuals/visual-058.webp","./assets/visuals/visual-059.webp","./assets/visuals/visual-060.webp","./assets/visuals/visual-061.webp","./assets/visuals/visual-062.webp","./assets/visuals/visual-063.webp","./assets/visuals/visual-064.webp","./assets/visuals/visual-065.webp","./assets/visuals/visual-066.webp","./assets/visuals/visual-067.webp","./assets/visuals/visual-068.webp","./assets/visuals/visual-069.webp","./assets/visuals/visual-070.webp","./assets/visuals/visual-071.webp","./assets/visuals/visual-072.webp","./assets/visuals/visual-073.webp","./assets/visuals/visual-074.webp","./assets/visuals/visual-075.webp","./assets/visuals/visual-076.webp","./assets/visuals/visual-077.webp","./assets/visuals/visual-078.webp","./assets/visuals/visual-079.webp","./assets/visuals/visual-080.webp","./assets/visuals/visual-081.webp","./assets/visuals/visual-082.webp","./assets/visuals/visual-083.webp","./assets/visuals/visual-084.webp","./assets/visuals/visual-085.webp","./assets/visuals/visual-086.webp","./assets/visuals/visual-087.webp","./assets/visuals/visual-088.webp","./assets/visuals/visual-089.webp","./assets/visuals/visual-090.webp","./assets/visuals/visual-091.webp","./assets/visuals/visual-092.webp","./assets/visuals/visual-093.webp","./assets/visuals/visual-094.webp","./assets/visuals/visual-095.webp","./assets/visuals/visual-096.webp","./assets/visuals/visual-097.webp","./assets/visuals/visual-098.webp","./assets/visuals/visual-099.webp","./assets/visuals/visual-100.webp","./assets/visuals/visual-101.webp","./assets/visuals/visual-102.webp","./assets/visuals/visual-103.webp","./assets/visuals/visual-104.webp","./assets/visuals/visual-105.webp","./assets/visuals/visual-106.webp","./assets/visuals/visual-107.webp","./assets/visuals/visual-108.webp"];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const copy=resp.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return resp;})));});
+const CACHE = 'memoviet-v31';
+const CORE = [
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
+];
+
+self.addEventListener('install', event => {
+  self.skipWaiting();
+  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)));
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  const sameOrigin = url.origin === self.location.origin;
+  if (!sameOrigin) return;
+
+  const isPage = event.request.mode === 'navigate';
+  const isCode = /\.(?:js|css|html)$/.test(url.pathname);
+
+  if (isPage || isCode) {
+    event.respondWith(
+      fetch(event.request, {cache: 'no-store'})
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
+        return response;
+      });
+    })
+  );
+});
