@@ -29,7 +29,7 @@ jobs:
         run: |
           rm -rf _site
           mkdir _site
-          cp -a index.html manifest.webmanifest sw.js dialogue-av02.js editor.js editor.css editor-mobile.js editor-mobile.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js progress-map-watercolor.js progress-map-watercolor.css mobile-shell.js mobile-shell.css mobile-cleanup.js mobile-cleanup.css icons assets _site/
+          cp -a index.html manifest.webmanifest sw.js dialogue-av02.js editor.js editor.css editor-mobile.js editor-mobile.css backup.js backup.css ux.js ux.css lesson-fixes.js lesson-fixes.css adventure-flow.js adventure-flow.css review-scope.js review-scope.css progress-map.js progress-map.css progress-map-visible.js progress-map-watercolor.js progress-map-watercolor.css mobile-shell.js mobile-shell.css mobile-cleanup.js mobile-cleanup.css map-rescue-32.js map-rescue-32.css icons assets _site/
           python3 - <<'PY'
           from pathlib import Path
           p = Path('_site/index.html')
@@ -45,7 +45,8 @@ jobs:
               ('progress-map.css', '<link rel="stylesheet" href="progress-map.css?v=31">'),
               ('progress-map-watercolor.css', '<link rel="stylesheet" href="progress-map-watercolor.css?v=31">'),
               ('mobile-shell.css', '<link rel="stylesheet" href="mobile-shell.css?v=31">'),
-              ('mobile-cleanup.css', '<link rel="stylesheet" href="mobile-cleanup.css?v=31">')
+              ('mobile-cleanup.css', '<link rel="stylesheet" href="mobile-cleanup.css?v=31">'),
+              ('map-rescue-32.css', '<link rel="stylesheet" href="map-rescue-32.css?v=32">')
           ]
           for marker, tag in links:
               if marker not in text:
@@ -63,7 +64,8 @@ jobs:
               ('progress-map-visible.js', '<script src="progress-map-visible.js?v=31"></script>'),
               ('progress-map-watercolor.js', '<script src="progress-map-watercolor.js?v=31"></script>'),
               ('mobile-shell.js', '<script src="mobile-shell.js?v=31"></script>'),
-              ('mobile-cleanup.js', '<script src="mobile-cleanup.js?v=31"></script>')
+              ('mobile-cleanup.js', '<script src="mobile-cleanup.js?v=31"></script>'),
+              ('map-rescue-32.js', '<script src="map-rescue-32.js?v=32"></script>')
           ]
           for marker, tag in scripts:
               if marker not in text:
