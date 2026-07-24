@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const MAP_ASSET = 'assets/vietnam-map-watercolor.svg?v=2';
+  const MAP_ASSET = 'assets/vietnam-map-watercolor.svg?v=31';
   const POSITIONS = [
     [46.24,17.43],[45.95,21.97],[56.82,17.68],[30.27,8.63],[42.08,6.56],[46.98,9.20],
     [38.56,19.44],[55.65,42.53],[61.52,44.87],[60.53,44.11],[59.71,45.72],[45.16,37.09],
@@ -14,7 +14,7 @@
 
   function readEmbeddedImage() {
     if (directImagePromise) return directImagePromise;
-    directImagePromise = fetch(MAP_ASSET, {cache: 'force-cache'})
+    directImagePromise = fetch(MAP_ASSET, {cache: 'reload'})
       .then(response => {
         if (!response.ok) throw new Error(`Carte introuvable (${response.status})`);
         return response.text();
@@ -38,6 +38,8 @@
     if (!progressButton || !mapButton || !progressView || !mapView) return;
 
     const showMap = tabName === 'map';
+    progressButton.hidden = false;
+    mapButton.hidden = false;
     progressButton.classList.toggle('active', !showMap);
     progressButton.setAttribute('aria-selected', String(!showMap));
     mapButton.classList.toggle('active', showMap);
@@ -56,8 +58,8 @@
 
     progressButton.hidden = false;
     mapButton.hidden = false;
-    progressButton.removeAttribute('style');
-    mapButton.removeAttribute('style');
+    progressButton.style.removeProperty('display');
+    mapButton.style.removeProperty('display');
 
     if (!tabs.dataset.mvReliableTabs) {
       tabs.dataset.mvReliableTabs = 'true';
